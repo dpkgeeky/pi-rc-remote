@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dream Team Car Control</title>
+
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/myremote.css" rel="stylesheet">
+
+    <script src="static/js/jquery-2.2.1.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <nav>
+        <a id="c_forward" class="button top" href="#"><i class="icon-top"></i></a>
+        <a id="c_right" class="button right" href="#"><i class="icon-right"></i></a>
+        <a id="c_left" class="button left" href="#"><i class="icon-left"></i></a>
+        <a id="c_back" class="button bottom" href="#"><i class="icon-bottom"></i></a>
+        <a class="center-button" href="#"><i class="icon-stop"></i></a>
+    </nav>
+</body>
+
+<script type="text/javascript">
+
+    $("#c_left").on("touchstart mousedown", function (e) {
+        e.preventDefault();
+        car("LEFT", 1);
+    });
+
+    $("#c_left").on("touchend mouseup", function (e) {
+        e.preventDefault();
+        car("LEFT", 0);
+    });
+    $("#c_right").on("touchstart mousedown", function (e) {
+        e.preventDefault();
+        car("RIGHT", 1);
+    });
+    $("#c_right").on("touchend mouseup", function (e) {
+        e.preventDefault();
+        car("RIGHT", 0);
+    });
+    $("#c_forward").on("touchstart mousedown", function (e) {
+        e.preventDefault();
+        car("FORWARD", 1);
+    });
+    $("#c_forward").on("touchend mouseup", function (e) {
+        e.preventDefault();
+        car("FORWARD", 0);
+    });
+    $("#c_back").on("touchstart mousedown", function (e) {
+        e.preventDefault();
+        car("BACK", 1);
+    });
+    $("#c_back").on("touchend mouseup", function (e) {
+        e.preventDefault();
+        car("BACK", 0);
+    });
+
+    function car(cmd, status) {
+        console.log("Car command: " + cmd + ", status: " + status);
+        var data = {
+            data: JSON.stringify({ "value": cmd, "status": status })
+        };
+        $.ajax({
+            url: "/car",
+            data: data,
+            type: "POST",
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+
+</html>

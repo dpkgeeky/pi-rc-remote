@@ -18,20 +18,20 @@ DEVICE_TYPE = None
 # Car Code
 #
 
-# import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
-# GPIO.setmode(GPIO.BOARD)
-# GPIO.setup(13, GPIO.OUT)
-# GPIO.setup(15, GPIO.OUT)
-# GPIO.setup(21, GPIO.OUT)
-# GPIO.setup(19, GPIO.OUT)
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(13, GPIO.OUT)
+GPIO.setup(15, GPIO.OUT)
+GPIO.setup(21, GPIO.OUT)
+GPIO.setup(19, GPIO.OUT)
 
 # status: 1 -> move; 0 -> stop
 def car_move(cmd, status):
     print("car_move - command value:" + str(cmd) + ", status value:" + str(status))
     pin = car_get_command(cmd)
     print("car_move - command pin:" + str(pin))
-    # GPIO.output(pin, bool(int(status)))
+    GPIO.output(pin, bool(int(status)))
 
 def car_get_command(key):
     mapping = {

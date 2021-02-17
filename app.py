@@ -61,6 +61,10 @@ def setup():
 def index():
     return render_template("index.html")
 
+@app.route("/remote")
+def remote():
+    return render_template("remote.html")
+
 @app.route("/car", methods=["POST"])
 def car():
     data = json.loads(request.form.get("data"))

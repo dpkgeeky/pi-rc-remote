@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="static/js/jquery-2.2.1.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <title>Racing Masters</title>
+    <style>
+        body {
+            margin:0;
+            padding: 0;
+            background: url(static/img/banner.jpg) center center no-repeat;
+            background-size: cover;
+            position: relative;
+            min-height: 100vh;
+           overflow: hidden;
+        }
+        .main_banner {
+            height:600px;
+            width: 100%;
+            background-repeat: no-repeat;
+        }
+        .imges_thumb {
+            position: absolute;
+            bottom: 25px;
+            overflow: hidden;
+            width: 90%;
+            display: flex;
+            justify-content: space-between;
+            left: 50%;
+            transform: translateX(-50%);
+            align-items: center;
+        }
+        .first_thumb {
+           width: 15%;
+        }
+        .first_thumb img{
+            width: 100%;
+            max-width: 200px;
+            /* animation: handleMove 8s linear infinite ; */
+        }
+        .secong_thumb{
+            display: flex;
+            width: 25%;
+        }
+        .secong_thumb .inner-img{
+            width: 50%;
+            padding-left: 20px;
+        }
+        .secong_thumb img{
+            max-width: 250px;
+            width: 100%;
+            display: block;
+            margin-left: auto;
+            cursor: pointer;
+        }
+        
+
+        @keyframes handleMove{
+            0%{
+              transform: rotate(0);  
+            }
+            25%{
+                transform: rotate(45deg);
+            }
+            50%{
+                transform: rotate(0deg);  
+            }
+            75%{
+                transform: rotate(-45deg);  
+            }
+            100%{
+                transform: rotate(0deg);  
+            }
+        }
+
+        @media only screen and (max-width: 1199px) {
+
+}
+
+@media only screen and (max-width: 1145px) { 
+  
+
+}
+@media only screen and (max-width: 1024px) { 
+
+
+
+}
+ @media only screen and (max-width: 991px) {
+.imges_thumb {
+    position: absolute;
+    bottom: 25%;
+    overflow: hidden;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+}
+ .secong_thumb{
+            display: flex;
+            width: 30%;
+        }
+        .first_thumb {
+    width: 20%;
+}
+  }
+
+ @media only screen and (max-width: 768px) {
+.imges_thumb {
+    position: absolute;
+    bottom: 25%;
+    overflow: hidden;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+}
+ .secong_thumb{
+            display: flex;
+            width: 50%;
+        }
+        .first_thumb {
+    width: 30%;
+}
+  }
+
+ @media (max-width: 640px) { 
+
+ }
+
+ .press_effect {
+     transform: scale(0.8);
+ }
+        
+    </style>
+</head>
+
+<body>
+    <header class="main_banner">
+        <div class="imges_thumb">
+            <div class="first_thumb">
+                <img id="c_left" src="static/img/steering.png" alt="steering " />
+            </div>
+            <div class="secong_thumb">
+                <div class="inner-img press-effect">
+                    <img id="c_forward" src="static/img/break.png" alt="break" />
+                </div>
+                <div class="inner-img press-effect">
+                    <img id="c_back" src="static/img/accelerator.png" alt="break" />
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+</body>
+<script type="text/javascript">
+
+    $("#c_left").on("touchstart mousedown", function (e) {
+        e.preventDefault();
+        var x = event.pageX - this.offsetLeft;
+        var y = event.pageY - this.offsetTop;
+        console.log("X Coordinate: " + x + " Y Coordinate: " + y);
+        car("LEFT", 1);
+    });
+
+    $("#c_left").on("touchend mouseup", function (e) {
+        e.preventDefault();
+        car("LEFT", 0);
+    });
+    $("#c_right").on("touchstart mousedown", function (e) {
+        e.preventDefault();
+        car("RIGHT", 1);
+    });
+    $("#c_right").on("touchend mouseup", function (e) {
+        e.preventDefault();
+        car("RIGHT", 0);
+    });
+    $("#c_forward").on("touchstart mousedown", function (e) {
+        e.preventDefault();
+        car("FORWARD", 1);
+    });
+    $("#c_forward").on("touchend mouseup", function (e) {
+        e.preventDefault();
+        car("FORWARD", 0);
+    });
+    $("#c_back").on("touchstart mousedown", function (e) {
+        e.preventDefault();
+        car("BACK", 1);
+    });
+    $("#c_back").on("touchend mouseup", function (e) {
+        e.preventDefault();
+        car("BACK", 0);
+    });
+
+    function car(cmd, status) {
+        console.log("Car command: " + cmd + ", status: " + status);
+        var data = {
+            data: JSON.stringify({ "value": cmd, "status": status })
+        };
+        $.ajax({
+            url: "/car",
+            data: data,
+            type: "POST",
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+
+</html>

@@ -61,9 +61,9 @@ def setup():
 def index():
     return render_template("index.html")
 
-@app.route("/remote")
-def remote():
-    return render_template("remote.html")
+@app.route("/<string:name>")
+def remote(name):
+    return render_template(name + ".html")
 
 @app.route("/car", methods=["POST"])
 def car():

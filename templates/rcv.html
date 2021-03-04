@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="static/js/jquery-2.2.1.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <title>Racing Masters</title>
+    <style>
+        body {
+                margin: 0;
+                padding: 0;
+                background: url(static/img/banner.jpg) center center no-repeat;
+                background-size: cover;
+                position: relative;
+                min-height: 100vh;
+                overflow: hidden;
+            }
+    
+            .main_banner {
+                height: 600px;
+                width: 100%;
+                background-repeat: no-repeat;
+            }
+    
+            .imges_thumb {
+                position: absolute;
+                bottom: 25px;
+                overflow: hidden;
+                width: 90%;
+                display: flex;
+                justify-content: space-between;
+                left: 50%;
+                transform: translateX(-50%);
+                align-items: center;
+            }
+    
+            .first_thumb {
+                width: 15%;
+            }
+    
+            .first_thumb img {
+                width: 100%;
+                max-width: 200px;
+            }
+    
+            .first_thumb table {
+                width: 100%;
+                max-width: 200px;
+            }
+    
+            .secong_thumb {
+                display: flex;
+                width: 25%;
+            }
+    
+            .secong_thumb .inner-img {
+                width: 50%;
+                padding-left: 20px;
+            }
+    
+            .secong_thumb img {
+                max-width: 250px;
+                width: 100%;
+                display: block;
+                margin-left: auto;
+            }
+    
+            .button:active {
+                box-shadow: 0 5px #666;
+                transform: translateY(4px);
+            }
+    
+            @media only screen and (max-width: 1199px) {}
+    
+            @media only screen and (max-width: 1145px) {}
+    
+            @media only screen and (max-width: 1024px) {}
+    
+            @media only screen and (max-width: 991px) {
+                .imges_thumb {
+                    position: absolute;
+                    bottom: 25%;
+                    overflow: hidden;
+                    width: 90%;
+                    display: flex;
+                    justify-content: space-between;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    align-items: center;
+                }
+    
+                .secong_thumb {
+                    display: flex;
+                    width: 30%;
+                }
+    
+                .first_thumb {
+                    width: 20%;
+                }
+            }
+    
+            @media only screen and (max-width: 768px) {
+                .imges_thumb {
+                    position: absolute;
+                    bottom: 5%;
+                    overflow: hidden;
+                    width: 90%;
+                    display: flex;
+                    justify-content: space-between;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    align-items: center;
+                    
+                }
+    
+                .secong_thumb {
+                    display: flex;
+                    width: 50%;
+                }
+    
+                .first_thumb {
+                    width: 10%;
+                }
+
+            }
+    
+
+/* https://css-tricks.com/snippets/css/media-queries-for-standard-devices/ */
+/* ----------- iPhone 6, 6S, 7 and 8 ----------- */
+            /* Portrait and Landscape */
+            @media only screen 
+            and (min-width: 375px) 
+            and (max-width: 667px) 
+            and (-webkit-min-device-pixel-ratio: 2) { 
+
+            }
+
+            /* Portrait */
+            @media only screen 
+            and (min-width: 375px) 
+            and (max-width: 667px) 
+            and (-webkit-min-device-pixel-ratio: 2)
+            and (orientation: portrait) { 
+                .imges_thumb {
+                    top: 430px;
+                }
+                
+                .first_thumb table {
+                    max-width: 150px;
+                }
+
+                .first_thumb img {
+                    max-width: 150px;
+                }
+
+                .navi {
+                    top: 40px !important; 
+                }
+            }
+
+            /* Landscape */
+            @media only screen 
+            and (min-width: 375px) 
+            and (max-width: 667px) 
+            and (-webkit-min-device-pixel-ratio: 2)
+            and (orientation: landscape) { 
+                .main_banner {
+                    height: 0px;
+                }
+
+            }
+
+            @media (max-width: 640px) {}
+    
+            #streeringimg {
+                -moz-transition: transform 1s;
+                -webkit-transition: transform 1s;
+                transition: transform 1s;
+            }
+    
+            #streeringimg2 {
+                -moz-transition: transform 1s;
+                -webkit-transition: transform 1s;
+                transition: transform 1s;
+            }
+    
+            .streeringimg {
+                -webkit-transition-duration: 1s;
+                -moz-transition-duration: 1s;
+                -o-transition-duration: 1s;
+                transition-duration: 1s;
+                -webkit-transition-property: -webkit-transform;
+                -moz-transition-property: -moz-transform;
+                -o-transition-property: -o-transform;
+                transition-property: transform;
+            }
+    
+            .streeringimg2 {
+                -webkit-transition-duration: 1s;
+                -moz-transition-duration: 1s;
+                -o-transition-duration: 1s;
+                transition-duration: 1s;
+                -webkit-transition-property: -webkit-transform;
+                -moz-transition-property: -moz-transform;
+                -o-transition-property: -o-transform;
+                transition-property: transform;
+            }
+    
+            .streeringimg-left {
+                transform: rotate(-45deg);
+                -webkit-transform: rotate(-45deg);
+                -ms-transform: rotate(45deg);
+            }
+    
+            .streeringimg-right {
+                transform: rotate(45deg);
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+            }
+    
+            .container {
+                position: relative;
+            }
+    
+            .navi {
+                position: absolute;
+                top: 80px;
+                left: 0;
+            }
+            .infoi {
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+    
+            .navi {
+                z-index: 10;
+            }
+
+            .button {
+                cursor: pointer;
+            }
+        </style>
+</head>
+
+<body>
+    <header class="main_banner" style="bottom: 10px;">
+
+        <div class="imges_thumb">
+            <div class="first_thumb">
+                <table id="streeringimg" class="streeringimg navi">
+                    <tr>
+                        <td>
+                            <img id="c_left" class="button" src="static/img/transparent.png" alt="break">
+                        </td>
+                        <td>
+                            <img id="c_right" class="button" src="static/img/transparent.png" alt="break">
+                        </td>
+
+                    </tr>
+                </table>
+                <img id="streeringimg2" class="streeringimg infoi" src="static/img/steering.png" alt="steering " />
+            </div>
+            <div class="secong_thumb">
+                <div class="inner-img">
+                    <img id="c_back" class="button" src="static/img/break.png" alt="break" />
+                </div>
+                <div class="inner-img">
+                    <img id="c_forward" class="button" src="static/img/accelerator.png" alt="break" />
+                </div>
+            </div>
+
+        </div>
+    </header>
+</body>
+<script type="text/javascript">
+
+    $("#c_left").on("touchstart mousedown", function (e) {
+        e.preventDefault();
+        $("#streeringimg2").addClass("streeringimg-left");
+        car("LEFT", 1);
+    });
+
+    $("#c_left").on("touchend mouseup", function (e) {
+        e.preventDefault();
+        $("#streeringimg2").removeClass("streeringimg-left");
+        car("LEFT", 0);
+    });
+    $("#c_right").on("touchstart mousedown", function (e) {
+        e.preventDefault();
+        $("#streeringimg2").addClass("streeringimg-right");
+        car("RIGHT", 1);
+    });
+    $("#c_right").on("touchend mouseup", function (e) {
+        e.preventDefault();
+        $("#streeringimg2").removeClass("streeringimg-right");
+        car("RIGHT", 0);
+    });
+    $("#c_forward").on("touchstart mousedown", function (e) {
+        e.preventDefault();
+        car("FORWARD", 1);
+    });
+    $("#c_forward").on("touchend mouseup", function (e) {
+        e.preventDefault();
+        car("FORWARD", 0);
+    });
+    $("#c_back").on("touchstart mousedown", function (e) {
+        e.preventDefault();
+        car("BACK", 1);
+    });
+    $("#c_back").on("touchend mouseup", function (e) {
+        e.preventDefault();
+        car("BACK", 0);
+    });
+
+    function car(cmd, status) {
+        console.log("Car command: " + cmd + ", status: " + status);
+        var data = {
+            data: JSON.stringify({ "value": cmd, "status": status })
+        };
+        $.ajax({
+            url: "/car",
+            data: data,
+            type: "POST",
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+
+</html>

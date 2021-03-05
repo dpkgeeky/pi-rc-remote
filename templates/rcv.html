@@ -12,7 +12,7 @@
         body {
                 margin: 0;
                 padding: 0;
-                background: url(static/img/banner.jpg) center center no-repeat;
+                background: url(/?action=stream) center center no-repeat;
                 background-size: cover;
                 position: relative;
                 min-height: 100vh;
@@ -186,7 +186,7 @@
                 -webkit-transition: transform 1s;
                 transition: transform 1s;
             }
-    
+    å
             .streeringimg {
                 -webkit-transition-duration: 1s;
                 -moz-transition-duration: 1s;
@@ -248,7 +248,6 @@
 
 <body>
     <header class="main_banner" style="bottom: 10px;">
-
         <div class="imges_thumb">
             <div class="first_thumb">
                 <table id="streeringimg" class="streeringimg navi">
@@ -302,18 +301,22 @@
     $("#c_forward").on("touchstart mousedown", function (e) {
         e.preventDefault();
         car("FORWARD", 1);
+        car("FLIGHT", 1);
     });
     $("#c_forward").on("touchend mouseup", function (e) {
         e.preventDefault();
         car("FORWARD", 0);
+        car("FLIGHT", 0);
     });
     $("#c_back").on("touchstart mousedown", function (e) {
         e.preventDefault();
         car("BACK", 1);
+        car("BLIGHT", 1);
     });
     $("#c_back").on("touchend mouseup", function (e) {
         e.preventDefault();
         car("BACK", 0);
+        car("BLIGHT", 0);
     });
 
     function car(cmd, status) {

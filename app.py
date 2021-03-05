@@ -25,6 +25,9 @@ GPIO.setup(13, GPIO.OUT)
 GPIO.setup(15, GPIO.OUT)
 GPIO.setup(21, GPIO.OUT)
 GPIO.setup(19, GPIO.OUT)
+GPIO.setup(40, GPIO.OUT)
+GPIO.setup(8, GPIO.OUT)
+
 
 # status: 1 -> move; 0 -> stop
 def car_move(cmd, status):
@@ -38,7 +41,9 @@ def car_get_command(key):
         "LEFT": 19, 
         "RIGHT": 21,
         "FORWARD": 13,
-        "BACK": 15
+        "BACK": 15,
+        "FLIGHT": 40,
+        "BLIGHT": 8
     }
     return mapping.get(key)
 

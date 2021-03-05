@@ -301,18 +301,22 @@
     $("#c_forward").on("touchstart mousedown", function (e) {
         e.preventDefault();
         car("FORWARD", 1);
+        car("FLIGHT", 1);
     });
     $("#c_forward").on("touchend mouseup", function (e) {
         e.preventDefault();
         car("FORWARD", 0);
+        car("FLIGHT", 0);
     });
     $("#c_back").on("touchstart mousedown", function (e) {
         e.preventDefault();
         car("BACK", 1);
+        car("BLIGHT", 1);
     });
     $("#c_back").on("touchend mouseup", function (e) {
         e.preventDefault();
         car("BACK", 0);
+        car("BLIGHT", 0);
     });
 
     function car(cmd, status) {

@@ -35,10 +35,10 @@ def car_move(cmd, status):
 
 def car_get_command(key):
     mapping = {
-        "LEFT": 13, 
-        "RIGHT": 15,
-        "FORWARD": 21,
-        "BACK": 19
+        "LEFT": 19, 
+        "RIGHT": 21,
+        "FORWARD": 13,
+        "BACK": 15
     }
     return mapping.get(key)
 

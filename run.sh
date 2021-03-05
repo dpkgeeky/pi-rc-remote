@@ -2,7 +2,7 @@
 
 # Call mjpstreamer
 echo 'Initiate Streamer'
-./mjpg-streamer.sh
+./mjpg-streamer.sh start
 
 # Call Python App
 echo 'Starting python app'

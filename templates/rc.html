@@ -129,6 +129,22 @@
     
 
 /* https://css-tricks.com/snippets/css/media-queries-for-standard-devices/ */
+/* ----------- Galaxy S4, S5 and Note 3 ----------- */
+
+        /* Landscape */
+        @media screen 
+        and (device-width: 320px) 
+        and (device-height: 640px) 
+        and (-webkit-device-pixel-ratio: 3) 
+        and (orientation: landscape) {
+            .imges_thumb {
+                top: 0px;
+            }
+            .main_banner {
+                    height: 0px;
+                }
+        }
+
 /* ----------- iPhone 6, 6S, 7 and 8 ----------- */
             /* Portrait and Landscape */
             @media only screen 

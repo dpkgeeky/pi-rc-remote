@@ -10,6 +10,7 @@ import socket
 import re
 import json
 import base64
+import threading
 
 DEVICE = None
 DEVICE_TYPE = None
@@ -47,6 +48,20 @@ def car_get_command(key):
     }
     return mapping.get(key)
 
+# periodic
+interval = 2
+
+def myPeriodicFunction():
+    print "This loops on a timer every %d seconds" % interval
+    car_move('LEFT', 0) 
+    car_move('RIGHT', 0)
+    car_move('FORWARD', 0)
+    car_move('BACK', 0) 
+
+def startTimer():
+    threading.Timer(interval, startTimer).start()
+    myPeriodicFunction()
+
 # 
 # Flask Code
 # 
@@ -79,5 +94,8 @@ def car():
     return "success"
 
 if __name__ == "__main__":
+    startTimer()
     app.run(debug=True, host="0.0.0.0", port=8080)
+ 
+
 

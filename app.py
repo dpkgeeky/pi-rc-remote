@@ -10,7 +10,7 @@ import socket
 import re
 import json
 import base64
-import threading
+from multiprocessing import Process
 
 DEVICE = None
 DEVICE_TYPE = None
@@ -90,16 +90,18 @@ def sensorFunction(distance):
     car_move('BACK', 0) 
 
 def startTimerLoop():
-    threading.Timer(intervalLoop, startTimerLoop).start()
-    periodicFunction(intervalLoop)
+    while True:  
+        periodicFunction(intervalLoop)
+        time.sleep(intervalLoop)
 
 def startTimerDistance():
-    threading.Timer(intervalSensor, startTimerDistance).start()
-    distCM = distance()
-    if enableLogs:
-        print "startTimerDistance loops on a timer every %d distance" % distCM
-    if distCM <= distCMConstant:
-        sensorFunction(distCM)
+    while True:        
+        distCM = distance()
+        if enableLogs:
+            print "startTimerDistance loops on a timer every %d distance" % distCM
+        if distCM <= distCMConstant:
+            sensorFunction(distCM)
+        time.sleep(intervalSensor)
 
 # distance calculator 
 
@@ -155,8 +157,9 @@ def setup():
     # Set up USB drive for missile launcher
     try:
         print("Code for initial setup")
-        startTimerLoop()
-        startTimerDistance()
+        Process(target=startTimerLoop).start()
+        Process(target=startTimerDistance).start()
+        print("Loop and Sensor started")
     except Exception:
         print("Exception occured in initial setup")
 
@@ -184,6 +187,6 @@ def car():
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=8080)
- 
+
 
 

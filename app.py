@@ -80,8 +80,7 @@ def periodicFunction(interval):
     car_move('BACK', 0) 
 
 def sensorFunction(interval):
-    if enableLogs:
-        print "sensorFunction loops on a timer every %d seconds" % interval
+    print "sensorFunction loops on a timer every %d seconds" % interval
     car_move('FORWARD', 0) 
     car_move('BACK', 1)
     time.sleep(0.00001)

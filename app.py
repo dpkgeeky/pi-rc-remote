@@ -37,10 +37,12 @@ GPIO.setup(GPIO_ECHO, GPIO.IN)
 
 
 # status: 1 -> move; 0 -> stop
-def car_move(cmd, status):
-    print("car_move - command value:" + str(cmd) + ", status value:" + str(status))
+def car_move(cmd, status, disableLogs=False):
+    if disableLogs:
+        print("car_move - command value:" + str(cmd) + ", status value:" + str(status))
     pin = car_get_command(cmd)
-    print("car_move - command pin:" + str(pin))
+    if disableLogs:
+        print("car_move - command pin:" + str(pin))
     GPIO.output(pin, bool(int(status)))
 
 def car_get_command(key):
@@ -58,11 +60,10 @@ def car_get_command(key):
 intervalDistance = 0.1
 intervalLoop = 4
 def myPeriodicFunction(interval):
-    print "This loops on a timer every %d seconds" % interval
-    car_move('LEFT', 0) 
-    car_move('RIGHT', 0)
-    car_move('FORWARD', 0)
-    car_move('BACK', 0) 
+    car_move('LEFT', 0, True) 
+    car_move('RIGHT', 0, True) 
+    car_move('FORWARD', 0, True) 
+    car_move('BACK', 0, True) 
 
 def startTimerLoop():
     threading.Timer(intervalLoop, startTimerLoop).start()
@@ -71,7 +72,7 @@ def startTimerLoop():
 def startTimerDistance():
     threading.Timer(intervalDistance, startTimerDistance).start()
     distCM = distance()
-    print "This loops on a timer every %d distance" % distCM
+    # print "This loops on a timer every %d distance" % distCM
     if distCM <= 20:
         myPeriodicFunction(intervalDistance)
 

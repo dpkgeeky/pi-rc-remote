@@ -15,35 +15,49 @@ import threading
 DEVICE = None
 DEVICE_TYPE = None
 
-#
-# Car Code
-#
+usernameValue = 'pi'
+passwordValue = 'Welcome123'
 
-import RPi.GPIO as GPIO
+isPi = True
+enableLogs = False
+intervalSensor = 0.1
+intervalLoop = 4
 
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(13, GPIO.OUT)
-GPIO.setup(15, GPIO.OUT)
-GPIO.setup(21, GPIO.OUT)
-GPIO.setup(19, GPIO.OUT)
-GPIO.setup(40, GPIO.OUT)
-GPIO.setup(8, GPIO.OUT)
+# isPi = False
+# enableLogs = True
+# intervalSensor = 5
+# intervalLoop = 10
+
 #set GPIO Pins
 GPIO_TRIGGER = 16
 GPIO_ECHO = 18
 
-GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
-GPIO.setup(GPIO_ECHO, GPIO.IN)
+#
+# Car Code
+#
+if isPi:
+    import RPi.GPIO as GPIO
+
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(13, GPIO.OUT)
+    GPIO.setup(15, GPIO.OUT)
+    GPIO.setup(21, GPIO.OUT)
+    GPIO.setup(19, GPIO.OUT)
+    GPIO.setup(40, GPIO.OUT)
+    GPIO.setup(8, GPIO.OUT)
+    GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
+    GPIO.setup(GPIO_ECHO, GPIO.IN)
 
 
 # status: 1 -> move; 0 -> stop
-def car_move(cmd, status, disableLogs=False):
-    if disableLogs:
+def car_move(cmd, status):
+    if enableLogs:
         print("car_move - command value:" + str(cmd) + ", status value:" + str(status))
     pin = car_get_command(cmd)
-    if disableLogs:
+    if enableLogs:
         print("car_move - command pin:" + str(pin))
-    GPIO.output(pin, bool(int(status)))
+    if isPi:  
+        GPIO.output(pin, bool(int(status)))
 
 def car_get_command(key):
     mapping = {
@@ -57,45 +71,59 @@ def car_get_command(key):
     return mapping.get(key)
 
 # periodic
-intervalDistance = 0.1
-intervalLoop = 4
-def myPeriodicFunction(interval):
-    car_move('LEFT', 0, True) 
-    car_move('RIGHT', 0, True) 
-    car_move('FORWARD', 0, True) 
-    car_move('BACK', 0, True) 
+def periodicFunction(interval):
+    if enableLogs:
+        print "periodicFunction loops on a timer every %d seconds" % interval
+    car_move('LEFT', 0) 
+    car_move('RIGHT', 0) 
+    car_move('FORWARD', 0) 
+    car_move('BACK', 0) 
+
+def sensorFunction(interval):
+    if enableLogs:
+        print "sensorFunction loops on a timer every %d seconds" % interval
+    car_move('FORWARD', 0) 
+    car_move('BACK', 1)
+    time.sleep(0.00001)
+    car_move('BACK', 0) 
 
 def startTimerLoop():
     threading.Timer(intervalLoop, startTimerLoop).start()
-    myPeriodicFunction(intervalLoop)
+    periodicFunction(intervalLoop)
 
 def startTimerDistance():
-    threading.Timer(intervalDistance, startTimerDistance).start()
+    threading.Timer(intervalSensor, startTimerDistance).start()
     distCM = distance()
-    # print "This loops on a timer every %d distance" % distCM
+    if enableLogs:
+        print "startTimerDistance loops on a timer every %d distance" % distCM
     if distCM <= 20:
-        myPeriodicFunction(intervalDistance)
+        sensorFunction(intervalSensor)
 
 # distance calculator 
 
 def distance():
-    # set Trigger to HIGH
-    GPIO.output(GPIO_TRIGGER, True)
+
+    if isPi:
+        # set Trigger to HIGH
+        GPIO.output(GPIO_TRIGGER, True)
  
     # set Trigger after 0.01ms to LOW
     time.sleep(0.00001)
-    GPIO.output(GPIO_TRIGGER, False)
+    if isPi:
+        GPIO.output(GPIO_TRIGGER, False)
  
     StartTime = time.time()
     StopTime = time.time()
  
-    # save StartTime
-    while GPIO.input(GPIO_ECHO) == 0:
-        StartTime = time.time()
+    if isPi:
+        # save StartTime
+        while GPIO.input(GPIO_ECHO) == 0:
+            StartTime = time.time()
  
-    # save time of arrival
-    while GPIO.input(GPIO_ECHO) == 1:
-        StopTime = time.time()
+    if isPi:
+        # save time of arrival
+        while GPIO.input(GPIO_ECHO) == 1:
+            StopTime = time.time()
  
     # time difference between start and arrival
     TimeElapsed = StopTime - StartTime
@@ -109,36 +137,48 @@ def distance():
 # Flask Code
 # 
 from flask import Flask, render_template, request, json
+from flask_httpauth import HTTPBasicAuth
 
 app = Flask(__name__)
+auth = HTTPBasicAuth()
+
+
+@auth.verify_password
+def verify_password(username, password):
+    if username == usernameValue and password == passwordValue:
+        return username
 
 @app.before_first_request
 def setup():
     # Set up USB drive for missile launcher
     try:
         print("Code for initial setup")
+        startTimerLoop()
+        startTimerDistance()
     except Exception:
         print("Exception occured in initial setup")
 
 @app.route("/")
+@auth.login_required
 def index():
-    return render_template("index.html")
+    return render_template("rc.html")
 
 @app.route("/<string:name>")
+@auth.login_required
 def remote(name):
     return render_template(name + ".html")
 
 @app.route("/car", methods=["POST"])
+@auth.login_required
 def car():
     data = json.loads(request.form.get("data"))
     cmd = data["value"]
     status = data["status"]
+    print("car_move - command value:" + str(cmd) + ", status value:" + str(status))
     car_move(cmd, status)  
     return "success"
 
 if __name__ == "__main__":
-    startTimerLoop()
-    startTimerDistance()
     app.run(debug=True, host="0.0.0.0", port=8080)
  
 

@@ -14,8 +14,9 @@ import threading
 
 DEVICE = None
 DEVICE_TYPE = None
+sensedObstacle = False
 
-distCMConstant = 30
+distCMConstant = 40
 backRotationTime = 0.01
 
 usernameValue = 'pi'
@@ -98,8 +99,11 @@ def startTimerDistance():
     distCM = distance()
     if enableLogs:
         print "startTimerDistance loops on a timer every %d distance" % distCM
-    if distCM <= distCMConstant:
+    if distCM <= distCMConstant and not sensedObstacle:
         sensorFunction(distCM)
+        sensedObstacle = True
+    elif distCM > distCMConstant: 
+        sensedObstacle = False
 
 # distance calculator 
 

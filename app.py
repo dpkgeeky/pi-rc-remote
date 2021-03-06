@@ -49,7 +49,7 @@ def car_get_command(key):
     return mapping.get(key)
 
 # periodic
-interval = 2
+interval = 3
 
 def myPeriodicFunction():
     print "This loops on a timer every %d seconds" % interval

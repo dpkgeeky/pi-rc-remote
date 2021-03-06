@@ -16,7 +16,7 @@ DEVICE = None
 DEVICE_TYPE = None
 
 distCMConstant = 30
-backRotationTime = 1
+backRotationTime = 0.01
 
 usernameValue = 'pi'
 passwordValue = 'Welcome123'

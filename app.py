@@ -14,6 +14,7 @@ from multiprocessing import Process
 
 DEVICE = None
 DEVICE_TYPE = None
+SENSOR_DETECT = False
 
 distCMConstant = 20
 backRotationTime = 0.01
@@ -28,7 +29,7 @@ intervalLoop = 4
 
 # isPi = False
 # enableLogs = True
-# intervalSensor = 20
+# intervalSensor = 10
 # intervalLoop = 20
 
 #set GPIO Pins
@@ -95,12 +96,16 @@ def startTimerLoop():
         time.sleep(intervalLoop)
 
 def startTimerDistance():
+    global SENSOR_DETECT
     while True:        
         distCM = distance()
         if enableLogs:
             print "startTimerDistance loops on a timer every %d distance" % distCM
-        if distCM <= distCMConstant:
+        if distCM <= distCMConstant and not SENSOR_DETECT:
             sensorFunction(distCM)
+            SENSOR_DETECT = True
+        elif distCM > distCMConstant:
+            SENSOR_DETECT = False
         time.sleep(intervalSensor)
 
 # distance calculator 
@@ -135,7 +140,7 @@ def distance():
     # and divide by 2, because there and back
     distance = (TimeElapsed * 34300) / 2
  
-    return distance    
+    return distance      
 
 # 
 # Flask Code

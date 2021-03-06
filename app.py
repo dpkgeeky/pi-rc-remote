@@ -79,8 +79,8 @@ def periodicFunction(interval):
     car_move('FORWARD', 0) 
     car_move('BACK', 0) 
 
-def sensorFunction(interval):
-    print "sensorFunction loops on a timer every %d seconds" % interval
+def sensorFunction(distance):
+    print "sensorFunction loops on a timer with %d cm" % distance
     car_move('FORWARD', 0) 
     car_move('BACK', 1)
     time.sleep(0.00001)
@@ -96,7 +96,7 @@ def startTimerDistance():
     if enableLogs:
         print "startTimerDistance loops on a timer every %d distance" % distCM
     if distCM <= 20:
-        sensorFunction(intervalSensor)
+        sensorFunction(distCM)
 
 # distance calculator 
 

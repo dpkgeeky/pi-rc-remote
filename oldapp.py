@@ -10,7 +10,6 @@ import socket
 import re
 import json
 import base64
-import threading
 
 DEVICE = None
 DEVICE_TYPE = None
@@ -28,21 +27,13 @@ GPIO.setup(21, GPIO.OUT)
 GPIO.setup(19, GPIO.OUT)
 GPIO.setup(40, GPIO.OUT)
 GPIO.setup(8, GPIO.OUT)
-#set GPIO Pins
-GPIO_TRIGGER = 16
-GPIO_ECHO = 18
-
-GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
-GPIO.setup(GPIO_ECHO, GPIO.IN)
 
 
 # status: 1 -> move; 0 -> stop
-def car_move(cmd, status, disableLogs=False):
-    if disableLogs:
-        print("car_move - command value:" + str(cmd) + ", status value:" + str(status))
+def car_move(cmd, status):
+    print("car_move - command value:" + str(cmd) + ", status value:" + str(status))
     pin = car_get_command(cmd)
-    if disableLogs:
-        print("car_move - command pin:" + str(pin))
+    print("car_move - command pin:" + str(pin))
     GPIO.output(pin, bool(int(status)))
 
 def car_get_command(key):
@@ -55,55 +46,6 @@ def car_get_command(key):
         "BLIGHT": 8
     }
     return mapping.get(key)
-
-# periodic
-intervalDistance = 0.1
-intervalLoop = 4
-def myPeriodicFunction(interval):
-    car_move('LEFT', 0, True) 
-    car_move('RIGHT', 0, True) 
-    car_move('FORWARD', 0, True) 
-    car_move('BACK', 0, True) 
-
-def startTimerLoop():
-    threading.Timer(intervalLoop, startTimerLoop).start()
-    myPeriodicFunction(intervalLoop)
-
-def startTimerDistance():
-    threading.Timer(intervalDistance, startTimerDistance).start()
-    distCM = distance()
-    # print "This loops on a timer every %d distance" % distCM
-    if distCM <= 20:
-        myPeriodicFunction(intervalDistance)
-
-# distance calculator 
-
-def distance():
-    # set Trigger to HIGH
-    GPIO.output(GPIO_TRIGGER, True)
- 
-    # set Trigger after 0.01ms to LOW
-    time.sleep(0.00001)
-    GPIO.output(GPIO_TRIGGER, False)
- 
-    StartTime = time.time()
-    StopTime = time.time()
- 
-    # save StartTime
-    while GPIO.input(GPIO_ECHO) == 0:
-        StartTime = time.time()
- 
-    # save time of arrival
-    while GPIO.input(GPIO_ECHO) == 1:
-        StopTime = time.time()
- 
-    # time difference between start and arrival
-    TimeElapsed = StopTime - StartTime
-    # multiply with the sonic speed (34300 cm/s)
-    # and divide by 2, because there and back
-    distance = (TimeElapsed * 34300) / 2
- 
-    return distance    
 
 # 
 # Flask Code
@@ -137,6 +79,4 @@ def car():
     return "success"
 
 if __name__ == "__main__":
-    startTimerLoop()
-    startTimerDistance()
     app.run(debug=True, host="0.0.0.0", port=8080)

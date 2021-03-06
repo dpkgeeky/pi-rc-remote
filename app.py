@@ -28,6 +28,12 @@ GPIO.setup(21, GPIO.OUT)
 GPIO.setup(19, GPIO.OUT)
 GPIO.setup(40, GPIO.OUT)
 GPIO.setup(8, GPIO.OUT)
+#set GPIO Pins
+GPIO_TRIGGER = 16
+GPIO_ECHO = 18
+
+GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
+GPIO.setup(GPIO_ECHO, GPIO.IN)
 
 
 # status: 1 -> move; 0 -> stop
@@ -70,10 +76,6 @@ def startTimerDistance():
         myPeriodicFunction(intervalDistance)
 
 # distance calculator 
- 
-#set GPIO Pins
-GPIO_TRIGGER = 16
-GPIO_ECHO = 18
 
 def distance():
     # set Trigger to HIGH

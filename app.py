@@ -97,6 +97,7 @@ def startTimerLoop():
 def startTimerDistance():
     threading.Timer(intervalSensor, startTimerDistance).start()
     distCM = distance()
+    global sensedObstacle
     if enableLogs:
         print "startTimerDistance loops on a timer every %d distance" % distCM
     if distCM <= distCMConstant and not sensedObstacle:

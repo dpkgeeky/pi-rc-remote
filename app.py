@@ -49,18 +49,58 @@ def car_get_command(key):
     return mapping.get(key)
 
 # periodic
-interval = 3
-
-def myPeriodicFunction():
+intervalDistance = 0.1
+intervalLoop = 4
+def myPeriodicFunction(interval):
     print "This loops on a timer every %d seconds" % interval
     car_move('LEFT', 0) 
     car_move('RIGHT', 0)
     car_move('FORWARD', 0)
     car_move('BACK', 0) 
 
-def startTimer():
-    threading.Timer(interval, startTimer).start()
-    myPeriodicFunction()
+def startTimerLoop():
+    threading.Timer(intervalLoop, startTimerLoop).start()
+    myPeriodicFunction(intervalLoop)
+
+def startTimerDistance():
+    threading.Timer(intervalDistance, startTimerDistance).start()
+    distCM = distance()
+    print "This loops on a timer every %d distance" % distCM
+    if distCM <= 20:
+        myPeriodicFunction(intervalDistance)
+
+# distance calculator 
+ 
+#set GPIO Pins
+GPIO_TRIGGER = 16
+GPIO_ECHO = 18
+
+def distance():
+    # set Trigger to HIGH
+    GPIO.output(GPIO_TRIGGER, True)
+ 
+    # set Trigger after 0.01ms to LOW
+    time.sleep(0.00001)
+    GPIO.output(GPIO_TRIGGER, False)
+ 
+    StartTime = time.time()
+    StopTime = time.time()
+ 
+    # save StartTime
+    while GPIO.input(GPIO_ECHO) == 0:
+        StartTime = time.time()
+ 
+    # save time of arrival
+    while GPIO.input(GPIO_ECHO) == 1:
+        StopTime = time.time()
+ 
+    # time difference between start and arrival
+    TimeElapsed = StopTime - StartTime
+    # multiply with the sonic speed (34300 cm/s)
+    # and divide by 2, because there and back
+    distance = (TimeElapsed * 34300) / 2
+ 
+    return distance    
 
 # 
 # Flask Code
@@ -94,7 +134,8 @@ def car():
     return "success"
 
 if __name__ == "__main__":
-    startTimer()
+    startTimerLoop()
+    startTimerDistance()
     app.run(debug=True, host="0.0.0.0", port=8080)
  
 

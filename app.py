@@ -25,8 +25,8 @@ intervalLoop = 4
 
 # isPi = False
 # enableLogs = True
-# intervalSensor = 5
-# intervalLoop = 10
+# intervalSensor = 20
+# intervalLoop = 20
 
 #set GPIO Pins
 GPIO_TRIGGER = 16
@@ -166,6 +166,8 @@ def index():
 @app.route("/<string:name>")
 @auth.login_required
 def remote(name):
+    if name == 'favicon.ico':
+        return ''
     return render_template(name + ".html")
 
 @app.route("/car", methods=["POST"])

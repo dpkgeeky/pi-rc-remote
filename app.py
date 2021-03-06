@@ -15,6 +15,9 @@ import threading
 DEVICE = None
 DEVICE_TYPE = None
 
+distCMConstant = 30
+backRotationTime = 1
+
 usernameValue = 'pi'
 passwordValue = 'Welcome123'
 
@@ -83,7 +86,7 @@ def sensorFunction(distance):
     print "sensorFunction loops on a timer with %d cm" % distance
     car_move('FORWARD', 0) 
     car_move('BACK', 1)
-    time.sleep(0.00001)
+    time.sleep(backRotationTime)
     car_move('BACK', 0) 
 
 def startTimerLoop():
@@ -95,7 +98,7 @@ def startTimerDistance():
     distCM = distance()
     if enableLogs:
         print "startTimerDistance loops on a timer every %d distance" % distCM
-    if distCM <= 20:
+    if distCM <= distCMConstant:
         sensorFunction(distCM)
 
 # distance calculator 

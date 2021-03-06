@@ -16,7 +16,7 @@ DEVICE = None
 DEVICE_TYPE = None
 sensedObstacle = False
 
-distCMConstant = 40
+distCMConstant = 20
 backRotationTime = 0.01
 
 usernameValue = 'pi'

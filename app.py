@@ -14,7 +14,6 @@ import threading
 
 DEVICE = None
 DEVICE_TYPE = None
-sensedObstacle = False
 
 distCMConstant = 20
 backRotationTime = 0.01
@@ -97,14 +96,10 @@ def startTimerLoop():
 def startTimerDistance():
     threading.Timer(intervalSensor, startTimerDistance).start()
     distCM = distance()
-    global sensedObstacle
     if enableLogs:
         print "startTimerDistance loops on a timer every %d distance" % distCM
-    if distCM <= distCMConstant and not sensedObstacle:
+    if distCM <= distCMConstant:
         sensorFunction(distCM)
-        sensedObstacle = True
-    elif distCM > distCMConstant: 
-        sensedObstacle = False
 
 # distance calculator 
 

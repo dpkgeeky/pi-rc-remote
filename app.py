@@ -97,6 +97,7 @@ def startTimerLoop():
 
 def startTimerDistance():
     global SENSOR_DETECT
+    SENSOR_DETECT = False
     while True:        
         distCM = distance()
         if enableLogs:

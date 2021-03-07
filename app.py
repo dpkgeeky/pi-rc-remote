@@ -95,19 +95,12 @@ def startTimerLoop():
     periodicFunction(intervalLoop)
 
 def startTimerDistance():
-    while True:  
-        try:
-            print "startTimerDistance Find distance"
-            distCM = distance()
-            if enableLogs or True:
-                print "startTimerDistance loops on a timer every %d distance" % distCM
-            if distCM <= distCMConstant:
-                sensorFunction(distCM)
-            time.sleep(intervalSensor)
-        # Reset by pressing CTRL + C
-        except Exception as e:
-            print "startTimerDistance exception" + str(e)
-            pass
+    threading.Timer(intervalSensor, startTimerDistance).start()
+    distCM = distance()
+    if enableLogs or True:
+        print "startTimerDistance loops on a timer every %d distance" % distCM
+    if distCM <= distCMConstant:
+        sensorFunction(distCM)
 
 
 # distance calculator 
@@ -165,7 +158,7 @@ def setup():
     try:
         print("Code for initial setup")
         startTimerLoop()
-        Process(target=startTimerDistance).start()
+        startTimerDistance()
         print("Loop and Sensor started")
     except Exception:
         print("Exception occured in initial setup")

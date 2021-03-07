@@ -6,4 +6,4 @@ echo 'Initiate Streamer'
 
 # Call Python App
 echo 'Starting python app'
-python appd.py
+sudo python appd.py

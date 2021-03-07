@@ -144,6 +144,7 @@ from flask import Flask, render_template, request, json
 from flask_httpauth import HTTPBasicAuth
 
 app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 auth = HTTPBasicAuth()
 
 
@@ -162,6 +163,14 @@ def setup():
         print("Loop and Sensor started")
     except Exception:
         print("Exception occured in initial setup")
+
+@app.after_request
+def add_header(r):
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
 
 @app.route("/")
 @auth.login_required

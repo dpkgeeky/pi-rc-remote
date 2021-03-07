@@ -95,7 +95,7 @@ def startTimerLoop():
             periodicFunction(intervalLoop)
             time.sleep(intervalLoop)
         except Exception:
-            print("startTimerLoop exception")  
+            print "startTimerLoop exception" + str(e)
             pass
 
 def startTimerDistance():
@@ -109,8 +109,8 @@ def startTimerDistance():
                 sensorFunction(distCM)
             time.sleep(intervalSensor)
         # Reset by pressing CTRL + C
-        except Exception:
-            print("startTimerDistance exception")  
+        except Exception as e:
+            print "startTimerDistance exception" + str(e)
             pass
 
 

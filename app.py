@@ -91,8 +91,12 @@ def sensorFunction(distance):
 
 def startTimerLoop():
     while True:  
-        periodicFunction(intervalLoop)
-        time.sleep(intervalLoop)
+        try:
+            periodicFunction(intervalLoop)
+            time.sleep(intervalLoop)
+        except Exception:
+            print("startTimerLoop exception")  
+            pass
 
 def startTimerDistance():
     while True:  
@@ -106,7 +110,8 @@ def startTimerDistance():
             time.sleep(intervalSensor)
         # Reset by pressing CTRL + C
         except Exception:
-            print("startTimerDistance stopped by User")  
+            print("startTimerDistance exception")  
+            pass
 
 
 # distance calculator 

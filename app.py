@@ -164,7 +164,7 @@ def setup():
     # Set up USB drive for missile launcher
     try:
         print("Code for initial setup")
-        Process(target=startTimerLoop).start()
+        startTimerLoop()
         Process(target=startTimerDistance).start()
         print("Loop and Sensor started")
     except Exception:

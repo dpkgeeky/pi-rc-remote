@@ -23,7 +23,7 @@ passwordValue = 'Welcome123'
 
 isPi = True
 enableLogs = False
-intervalSensor = 0.01
+intervalSensor = 0.1
 intervalLoop = 4
 
 # isPi = False
@@ -97,8 +97,8 @@ def startTimerLoop():
 def startTimerDistance():
     while True:        
         distCM = distance()
-        if enableLogs:
-            print "startTimerDistance loops on a timer every %d distance" % distCM
+        #if enableLogs:
+        print "startTimerDistance loops on a timer every %d distance" % distCM
         if distCM <= distCMConstant:
             sensorFunction(distCM)
         time.sleep(intervalSensor)

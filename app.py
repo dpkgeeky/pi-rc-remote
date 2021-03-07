@@ -14,7 +14,6 @@ from multiprocessing import Process
 
 DEVICE = None
 DEVICE_TYPE = None
-SENSOR_DETECT = False
 
 distCMConstant = 20
 backRotationTime = 0.01
@@ -24,7 +23,7 @@ passwordValue = 'Welcome123'
 
 isPi = True
 enableLogs = False
-intervalSensor = 0.001
+intervalSensor = 0.01
 intervalLoop = 4
 
 # isPi = False
@@ -96,17 +95,12 @@ def startTimerLoop():
         time.sleep(intervalLoop)
 
 def startTimerDistance():
-    global SENSOR_DETECT
-    SENSOR_DETECT = False
     while True:        
         distCM = distance()
         if enableLogs:
             print "startTimerDistance loops on a timer every %d distance" % distCM
-        if distCM <= distCMConstant and not SENSOR_DETECT:
+        if distCM <= distCMConstant:
             sensorFunction(distCM)
-            SENSOR_DETECT = True
-        elif distCM > distCMConstant:
-            SENSOR_DETECT = False
         time.sleep(intervalSensor)
 
 # distance calculator 

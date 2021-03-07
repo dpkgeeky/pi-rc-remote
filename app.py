@@ -97,6 +97,7 @@ def startTimerLoop():
 def startTimerDistance():
     while True:  
         try:
+            print "startTimerDistance Find distance"
             distCM = distance()
             if enableLogs or True:
                 print "startTimerDistance loops on a timer every %d distance" % distCM
@@ -104,7 +105,7 @@ def startTimerDistance():
                 sensorFunction(distCM)
             time.sleep(intervalSensor)
         # Reset by pressing CTRL + C
-        except KeyboardInterrupt:
+        except Exception:
             print("startTimerDistance stopped by User")  
 
 

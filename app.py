@@ -75,7 +75,7 @@ def car_get_command(key):
 
 # periodic
 def periodicFunction(interval):
-    if enableLogs:
+    if enableLogs or True:
         print "periodicFunction loops on a timer every %d seconds" % interval
     car_move('LEFT', 0) 
     car_move('RIGHT', 0) 

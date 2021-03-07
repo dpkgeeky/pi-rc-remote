@@ -10,6 +10,7 @@ import socket
 import re
 import json
 import base64
+import threading
 from multiprocessing import Process
 
 DEVICE = None
@@ -90,13 +91,8 @@ def sensorFunction(distance):
     car_move('BACK', 0) 
 
 def startTimerLoop():
-    while True:  
-        try:
-            periodicFunction(intervalLoop)
-            time.sleep(intervalLoop)
-        except Exception:
-            print "startTimerLoop exception" + str(e)
-            pass
+    threading.Timer(intervalLoop, startTimerLoop).start()
+    periodicFunction(intervalLoop)
 
 def startTimerDistance():
     while True:  

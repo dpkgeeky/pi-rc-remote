@@ -24,7 +24,7 @@ passwordValue = 'Welcome123'
 
 isPi = True
 enableLogs = False
-intervalSensor = 0.1
+intervalSensor = 0.5
 intervalLoop = 2
 
 # isPi = False
